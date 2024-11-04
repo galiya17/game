@@ -80,10 +80,11 @@ function getRandomShape() {
     return shapes[shapeKeys[randomIndex]];
 }
 
-const currentShape = getRandomShape();
-const rowsToColor = currentShape.shape.length;
-const cellsToColor = currentShape.shape[0].length;
+let currentShape = getRandomShape();
+let rowsToColor = currentShape.shape.length;
+let cellsToColor = currentShape.shape[0].length;
 
+function renderShape() {
 for (let rowIndex = 0; rowIndex < rowsToColor; rowIndex++) {
     const row = tetrisPlaygroundTarget.children[rowIndex];
 
@@ -95,5 +96,46 @@ for (let rowIndex = 0; rowIndex < rowsToColor; rowIndex++) {
     }
 }
 
-console.log(`Случайная фигура:`, currentShape);
+}
 
+function removePreviousShape() {
+    for (let rowIndex = 0; rowIndex < rowsToColor; rowIndex++) {
+        const row = tetrisPlaygroundTarget.children[rowIndex];
+
+        for (let cellIndex = 0; cellIndex < cellsToColor; cellIndex++) {
+            const cell = row.children[cellIndex];
+            if (currentShape.shape[rowIndex][cellIndex]) {
+                cell.style.backgroundColor = '';
+            }
+        }
+    }
+}
+
+function rotateShape(shape) {
+    const rotatedShape = []
+
+    for (let rowsCount = 0; rowsCount < shape[0].length; rowsCount++) {
+        const row = []
+        rotatedShape.push(row)
+    }
+    for (let i = shape.length -1, k=0; i >=0; i--, k++) {
+        for (let j=0; j < shape[0].length; j++) {
+            rotatedShape[j][k] = shape[i][j]
+        }
+    }
+
+    return rotatedShape
+}
+
+
+renderShape();
+
+document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+        removePreviousShape();
+        currentShape.shape = rotateShape(currentShape.shape); 
+        rowsToColor = currentShape.shape.length; 
+        cellsToColor = currentShape.shape[0].length;
+        renderShape();
+    }
+});
