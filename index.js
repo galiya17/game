@@ -1,3 +1,4 @@
+import { shapes } from "./shapes.js";
 function drawTetrisPlayground(x, y, target) {
     if (x <= 0 || y <= 0)
         throw new Error('x and y cannot be negative');
@@ -23,47 +24,6 @@ try {
 catch (e) {
     console.log(e.message);
 }
-const shapes = {
-    S: {
-        shape: [[0, 1, 1],
-            [1, 1, 0]],
-        color: 'yellowgreen'
-    },
-    Z: {
-        shape: [[1, 1, 0],
-            [0, 1, 1]],
-        color: 'red'
-    },
-    T: {
-        shape: [[1, 1, 1],
-            [0, 1, 0]],
-        color: 'purple'
-    },
-    O: {
-        shape: [[1, 1],
-            [1, 1]],
-        color: 'yellow'
-    },
-    L: {
-        shape: [[1, 0],
-            [1, 0],
-            [1, 1]],
-        color: 'darkblue'
-    },
-    J: {
-        shape: [[0, 1],
-            [0, 1],
-            [1, 1]],
-        color: 'brown'
-    },
-    I: {
-        shape: [[1],
-            [1],
-            [1],
-            [1]],
-        color: 'skyblue'
-    }
-};
 function getRandomShape() {
     const shapeKeys = Object.keys(shapes);
     const randomIndex = Math.floor(Math.random() * shapeKeys.length);
